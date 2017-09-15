@@ -10,7 +10,11 @@ import UIKit
 
 class LoginVC: UIViewController {
     
-    let inputsContainerView: UIView = {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    let inputFrame: UIView = {
         let v = UIView()
         v.backgroundColor = UIColor.white
         v.translatesAutoresizingMaskIntoConstraints = false
@@ -19,7 +23,7 @@ class LoginVC: UIViewController {
         return v
     }()
     
-    let loginButton: UIButton = {
+    let loginBtn: UIButton = {
         let b = UIButton(type: .system)
         b.backgroundColor = UIColor(r: 80, g: 101, b: 161)
         b.setTitleColor(UIColor.white, for: .normal)
@@ -32,37 +36,66 @@ class LoginVC: UIViewController {
         return b
     }()
     
+    let userTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "User"
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        tf.layer.masksToBounds = true
+        return tf
+    }()
+    
+    let inputSeparator: UIView = {
+        let v = UIView()
+        v.backgroundColor = UIColor(r: 220, g: 220, b: 220)
+        v.translatesAutoresizingMaskIntoConstraints = false
+        return v
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor(r: 61, g: 91, b: 151)
         
-        view.addSubview(inputsContainerView)
-        view.addSubview(loginButton)
+        view.addSubview(inputFrame)
+        view.addSubview(loginBtn)
         setupInputContainer()
         setupLoginButton()
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+
     
+    // MARK: - Set up inputs
     private func setupInputContainer() {
         
-        inputsContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        inputsContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        inputFrame.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        inputFrame.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-        inputsContainerView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32).isActive = true
-        inputsContainerView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        inputFrame.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32).isActive = true
+        inputFrame.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        
+        // MARK: Set up user input
+        
+        inputFrame.addSubview(userTextField)
+        inputFrame.addSubview(inputSeparator)
+        
+        userTextField.leftAnchor.constraint(equalTo: inputFrame.leftAnchor, constant: 12).isActive = true
+        userTextField.topAnchor.constraint(equalTo: inputFrame.topAnchor).isActive = true
+        userTextField.widthAnchor.constraint(equalTo: inputFrame.widthAnchor).isActive = true
+        userTextField.heightAnchor.constraint(equalTo: inputFrame.heightAnchor, multiplier: 1/3).isActive = true
+        
+        inputSeparator.leftAnchor.constraint(equalTo: inputFrame.leftAnchor).isActive = true
+        inputSeparator.topAnchor.constraint(equalTo: userTextField.bottomAnchor).isActive = true
+        inputSeparator.widthAnchor.constraint(equalTo: inputFrame.widthAnchor).isActive = true
+        inputSeparator.heightAnchor.constraint(equalToConstant: 1).isActive = true
     }
     
     private func setupLoginButton() {
         
-        loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        loginButton.topAnchor.constraint(equalTo: inputsContainerView.bottomAnchor, constant: 12).isActive = true
+        loginBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loginBtn.topAnchor.constraint(equalTo: inputFrame.bottomAnchor, constant: 12).isActive = true
         
-        loginButton.widthAnchor.constraint(equalTo: inputsContainerView.widthAnchor ).isActive = true
-        loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        loginBtn.widthAnchor.constraint(equalTo: inputFrame.widthAnchor ).isActive = true
+        loginBtn.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
     }
 }
